@@ -1,8 +1,5 @@
 'use client';
 import Main from '@/components/Main';
-import styles from './page.module.css';
-import { useSession, signOut, signIn } from 'next-auth/react';
-
 
 const mockData = [
   {
@@ -39,21 +36,7 @@ const mockData = [
 
 
 export default function Home() {
-  const { data: session } = useSession();
-  console.log(session?.user);
-
-
   return (
-    <>
-      <Main mockData={mockData} category='Trending' />
-      {/* {session ?
-        (
-          <>
-            <h3>Welcome {session?.user?.name}</h3>
-            <button type='button' onClick={() => signOut()}>SignOut</button>
-          </>
-        )
-        : (<button type='button' onClick={() => signIn('google')}>SignIn</button>)} */}
-    </>
+    <Main mockData={mockData} category='Trending' />
   )
 }
