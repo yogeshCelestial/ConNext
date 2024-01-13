@@ -1,0 +1,83 @@
+.writeContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.leftPortion {
+    width: 65%;
+}
+
+.rightPortion {
+    margin-top: 50px;
+    width: 25%;
+    padding: 10px;
+}
+.inside {
+    padding: 20px 15px;
+}
+
+.titleInput {
+    width: 99%;
+    height: 40px;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.fileInput::file-selector-button {
+    border-radius: 4px;
+    padding: 0 10px;
+    height: 40px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+    margin-right: 16px;
+    transition: background-color 200ms;
+}
+
+.fileLabel {
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn {
+    border: none;
+    background-color: white;
+    width: fit-content;
+    border: 1px solid black;
+    padding: 5px 10px;
+    font-size: 18px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+#btn1 {
+    &:hover {
+        background-color: rgb(173, 173, 173);
+        color: black;
+    }
+
+}
+#btn2 {
+    &:hover {
+        background-color: rgb(91, 134, 134);
+        color: white;
+    }
+
+}
+#btn3 {
+    background-color: teal;
+    &:hover {
+        background-color: teal;
+        color: white;
+    }
+
+}
