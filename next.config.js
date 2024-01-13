@@ -10,6 +10,10 @@ const nextConfig = {
           protocol: 'https',
           hostname: 'hitwebcounter.com',
         },
+        {
+          protocol: 'https',
+          hostname: 'lh3.googleusercontent.com',
+        },
       ],
     },
   
