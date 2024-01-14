@@ -41,5 +41,5 @@ export async function POST(req: Request) {
             author: { connect: { email: session?.user?.email! } }
         }
     });
-    return NextResponse.json({ res: createPost });
+    return NextResponse.json({ status: 200, res: createPost.title });
 }

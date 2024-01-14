@@ -10,13 +10,50 @@ import { signIn, useSession } from 'next-auth/react';
 
 
 const WritePost = () => {
-    const [value, setValue] = useState('');
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [category, setCategory] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
     const { status } = useSession();
     useLayoutEffect(() => {
         if (status !== 'authenticated' && status !== 'loading') {
             signIn();
         }
     }, [status]);
+
+    const resetForm = () => {
+        setTitle('');
+        setContent('');
+        setCategory('');
+        setImageUrl('');
+    };
+
+    const saveAsDraft = () => console.log('saved as draft');
+
+    const uploadPost = async (jsonData: any) => {
+        const response = await fetch('/api/post', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: jsonData,
+        });
+        const data = await response.json();
+        return data.status;
+    }
+    const publishPost = async () => {
+        const data = {
+            title,
+            content,
+            image: imageUrl
+        };
+        const jsonData = JSON.stringify(data);
+        const resp = await uploadPost(jsonData);
+        if (resp === 200) {
+            resetForm();
+        }
+    }
+
     return (
         <>
             <div className='writeContainer'>
@@ -24,27 +61,27 @@ const WritePost = () => {
                     <h3>Create/Update Blog Post</h3>
                     <div className='inputsHolder'>
                         <div>
-                            <input className='titleInput' placeholder='Title of the Post' />
+                            <input value={title} onChange={(e) => setTitle(e.target.value)} className='titleInput' placeholder='Title of the Post' />
                         </div>
                         <h4>Summery</h4>
-                        <ReactQuill theme="snow" value={value} onChange={setValue} />
+                        <ReactQuill theme="snow" value={content} onChange={setContent} />
                         <br />
                     </div>
                     <div className='buttonsContainer'>
-                        <Button className='btn' id='btn1' variant="outlined">Reset</Button>
-                        <Button className='btn' id='btn2' variant="outlined">Save as draft</Button>
-                        <Button className='btn' id='btn3' variant="contained" >Publish</Button>
+                        <Button onClick={resetForm} className='btn' id='btn1' variant="outlined">Reset</Button>
+                        <Button onClick={saveAsDraft} className='btn' id='btn2' variant="outlined">Save as draft</Button>
+                        <Button onClick={publishPost} className='btn' id='btn3' variant="contained" >Publish</Button>
                     </div>
                 </div>
                 <div className='rightPortion' >
                     <Paper elevation={1}>
                         <div className='inside'>
-                            <SelectCategory />
+                            <SelectCategory category={category} setCategory={setCategory} />
                             <label className='fileLabel' htmlFor='file'>
                                 Paste an image Url:
                             </label>
                             <br />
-                            <input className='fileInput' type='text' id='file' />
+                            <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} className='fileInput' type='text' id='file' />
                             {/* <input className='fileInput' type='file' accept='image/png, image/jpeg, image/jpg' id='file' /> */}
                         </div>
                     </Paper>
