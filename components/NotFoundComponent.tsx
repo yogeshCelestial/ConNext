@@ -1,6 +1,6 @@
 import React from 'react';
 import './NotFound.css';
-import NotFoundImage from '../assets/notFound.jpg';
+import NotFoundImage from '../app/assets/notFound.jpg'
 import Image from 'next/image';
 
 
