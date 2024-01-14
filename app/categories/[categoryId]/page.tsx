@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import Main from '@/components/Main';
+// import Main from '@/components/Main';
 import { notFound } from 'next/navigation';
 
 const SpecificCategory = ({ params }: { params: { categoryId: string } }) => {

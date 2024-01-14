@@ -30,7 +30,7 @@ const WritePost = () => {
 
     const saveAsDraft = () => console.log('saved as draft');
 
-    const uploadPost = async (jsonData: any) => {
+    const uploadPost = async (jsonData: string) => {
         const response = await fetch('/api/post', {
             method: 'POST',
             headers: {

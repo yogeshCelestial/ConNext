@@ -39,7 +39,7 @@ const TopNav = () => {
                             {(status === 'authenticated')
                                 ? (
                                     <IconButton onClick={handleClick}>
-                                        <Avatar alt={session.user?.name!} src={session.user?.image!} />
+                                        <Avatar alt={session.user?.name || ''} src={session.user?.image || ''} />
                                     </IconButton>)
                                 : (<Button variant='text' className='write' onClick={() => signIn('google')} style={{ fontWeight: 700 }}>
                                     Login

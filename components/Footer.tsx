@@ -40,7 +40,7 @@ const Footer = () => {
                         src="https://hitwebcounter.com/counter/counter.php?page=10478624&style=0011&nbdigits=5&type=ip&initCount=0"
                         title="Counter Widget"
                         alt="Counter Wideget"
-                        border="0"
+                        // border="0"
                         height={16}
                         width={60}
                     />

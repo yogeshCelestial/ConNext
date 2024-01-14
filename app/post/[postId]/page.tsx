@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -39,7 +39,7 @@ const SinglePost = () => {
 
     useEffect(() => {
         const currentDate = new Date();
-        const convertedDate = new Date(singlePost?.createdAt!);
+        const convertedDate = new Date(singlePost?.createdAt || '');
         // Calculate the difference in milliseconds
         const timeDifference: number = currentDate.getTime() - convertedDate.getTime();
 
@@ -53,7 +53,7 @@ const SinglePost = () => {
             <div className='content'>
                 {/* <Image className='postImage' loading='lazy' src={singlePost?.image!} alt='post' height={400} width={500} /> */}
                 <div className='userDiv'>
-                    <Avatar alt={session?.user?.name!} src={session?.user?.image!} />
+                    <Avatar alt={session?.user?.name || ''} src={session?.user?.image || ''} />
                     <div className='info'>
                         <span>Yogesh</span>
                         <p>Posted {postedTime === 0 ? 'today' : (postedTime === 1) ? 'day ago' : 'days ago'}</p>
@@ -63,7 +63,7 @@ const SinglePost = () => {
                 </div>
                 <div>
                     <h1>{singlePost?.title}</h1>
-                    <div className="description" dangerouslySetInnerHTML={{__html: singlePost?.content!}}></div>
+                    <div className="description" dangerouslySetInnerHTML={{__html: singlePost?.content || ''}}></div>
                 </div>
             </div>
             <div className='menu'>
