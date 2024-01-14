@@ -52,7 +52,7 @@
     font-size: 48px;
 }
 
-.contentContainer p {
+.contentContainer div {
     font-size: 1rem;
     text-align: justify;
 }

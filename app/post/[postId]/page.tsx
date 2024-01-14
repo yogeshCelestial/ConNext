@@ -63,7 +63,7 @@ const SinglePost = () => {
         </div>
         <div>
           <h1>{singlePost?.title}</h1>
-          <p className='description'>{singlePost?.content}</p>
+          <div className="description" dangerouslySetInnerHTML={{__html: singlePost?.content!}}></div>
         </div>
       </div>
       <div className='menu'>
