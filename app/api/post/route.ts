@@ -28,18 +28,18 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
     const session = await getServerSession(authOptions);
-    console.log(session);
     if (!session) {
         return new NextResponse(null, { status: 401 });
     }
+    const email: string = session?.user?.email || '';
     const json = await req.json();
     const createPost = await prisma.post.create({
         data: {
             title: json.title,
             image: json.image,
             content: json.content,
-            author: { connect: { email: session?.user?.email! } }
-        }
+            author: { connect: { email: email } },
+        },
     });
     return NextResponse.json({ status: 200, res: createPost.title });
 }

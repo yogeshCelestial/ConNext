@@ -17,7 +17,7 @@ const Main = ({ posts, category }: { posts: SnglPost[], category: string }) => {
                         <Link href={`/post/${post.id}`}>
                             <h2>{post.title}</h2>
                         </Link>
-                        <div className="contentData" dangerouslySetInnerHTML={{__html: post.content}} />
+                        <div className="contentData" dangerouslySetInnerHTML={{ __html: post.content }} />
                         <button type='button'>Read More</button>
                     </div>
                 </div>))}
@@ -26,4 +26,4 @@ const Main = ({ posts, category }: { posts: SnglPost[], category: string }) => {
     )
 }
 
-export default Main
+export default Main;

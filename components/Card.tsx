@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
@@ -8,7 +7,7 @@ import { styled } from '@mui/system';
 
 const Button = styled('button')({
     width: "fit-content",
-    border: "none",
+    // border: "none",
     padding: "4px 8px",
     border: "1px solid teal",
     borderRadius: "4px",
@@ -19,7 +18,7 @@ const Button = styled('button')({
         border: "1px solid white",
         backgroundColor: "teal",
         color: "black",
-    }
+    },
 });
 
 export default function CardComp() {

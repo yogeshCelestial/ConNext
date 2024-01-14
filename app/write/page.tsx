@@ -45,7 +45,7 @@ const WritePost = () => {
         const data = {
             title,
             content,
-            image: imageUrl
+            image: imageUrl,
         };
         const jsonData = JSON.stringify(data);
         const resp = await uploadPost(jsonData);
