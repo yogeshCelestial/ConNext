@@ -1,3 +1,90 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": [
+      "error"
+    ],
+    "@typescript-eslint/no-var-requires": 0,
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [
+          ".tsx"
+        ]
+      }
+    ],
+    "default-param-last": "off",
+    "react/require-default-props": "off",
+    "react/prop-types": 0,
+    "import/extensions": [
+      "off"
+    ],
+    "import/first": 0,
+    "import/order": 0,
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "ignore"
+      }
+    ],
+    "generator-star-spacing": [
+      "error",
+      "before"
+    ],
+    "indent": [
+      "error",
+      4
+    ],
+    "linebreak-style": 0,
+    "max-len": [
+      "error",
+      {
+        "code": 150,
+        "ignoreUrls": true,
+        "ignoreRegExpLiterals": true,
+        "ignoreComments": true,
+        "tabWidth": 2
+      }
+    ],
+    "react/jsx-indent": [
+      1,
+      4
+    ],
+    "react/jsx-indent-props": [
+      1,
+      4
+    ],
+    "react/jsx-fragments": [
+      0
+    ],
+    "@typescript-eslint/indent": 0,
+    "import/prefer-default-export": 0
+  }
 }
