@@ -4,11 +4,19 @@ import './write.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import SelectCategory from '../../components/SelectCategory';
-import { Paper } from '@mui/material';
+import { Button, Paper } from '@mui/material';
+import { useLayoutEffect } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 
 
 const WritePost = () => {
     const [value, setValue] = useState('');
+    const { status } = useSession();
+    useLayoutEffect(() => {
+        if (status !== 'authenticated' && status !== 'loading') {
+            signIn();
+        }
+    }, [status]);
     return (
         <>
             <div className='writeContainer'>
@@ -23,9 +31,9 @@ const WritePost = () => {
                         <br />
                     </div>
                     <div className='buttonsContainer'>
-                        <button className='btn' id='btn1' variant="text">Reset</button>
-                        <button className='btn' id='btn2' variant="outlined">Save as draft</button>
-                        <button className='btn' id='btn3' variant="contained" >Publish</button>
+                        <Button className='btn' id='btn1' variant="outlined">Reset</Button>
+                        <Button className='btn' id='btn2' variant="outlined">Save as draft</Button>
+                        <Button className='btn' id='btn3' variant="contained" >Publish</Button>
                     </div>
                 </div>
                 <div className='rightPortion' >
@@ -33,10 +41,11 @@ const WritePost = () => {
                         <div className='inside'>
                             <SelectCategory />
                             <label className='fileLabel' htmlFor='file'>
-                                Upload Image
+                                Paste an image Url:
                             </label>
                             <br />
-                            <input className='fileInput' type='file' accept='image/png, image/jpeg, image/jpg' id='file' />
+                            <input className='fileInput' type='text' id='file' />
+                            {/* <input className='fileInput' type='file' accept='image/png, image/jpeg, image/jpg' id='file' /> */}
                         </div>
                     </Paper>
                 </div>
