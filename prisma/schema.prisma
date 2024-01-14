@@ -18,6 +18,7 @@ model Post {
   title     String   @db.VarChar(255)
   content   String   @db.VarChar(2000)
   image     String   @db.VarChar(255)
+  category  String   @db.VarChar(50)
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
