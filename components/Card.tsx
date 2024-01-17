@@ -4,6 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { styled } from '@mui/system';
+import { SnglPost } from '@/app/post/[postId]/page';
 
 const Button = styled('button')({
     width: "fit-content",
@@ -21,19 +22,20 @@ const Button = styled('button')({
     },
 });
 
-export default function CardComp() {
+
+export default function CardComp({ image, title }: { image: string, title: string }) {
     return (
         <div>
             <CardActionArea>
                 <CardMedia
                     component="img"
                     height="140"
-                    image="https://picsum.photos/140/200/"
+                    image={image}
                     alt="interest"
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
-                        Title of the Interested Posts is given here So you can check this out.
+                        {title}
                     </Typography>
                 </CardContent>
             </CardActionArea>
