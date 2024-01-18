@@ -11,6 +11,9 @@ export async function GET(req: NextRequest) {
     const skip = req.nextUrl.searchParams.get('skip');
     const take = req.nextUrl.searchParams.get('take');
     const posts = await prisma.post.findMany({
+        where: {
+            published: true,
+        },
         skip: skip ? parseInt(skip, 10) : undefined,
         take: take ? parseInt(take, 10) : undefined,
     });
