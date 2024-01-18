@@ -5,15 +5,17 @@ import { useEffect, useState } from 'react';
 export default function Home() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState(false);
     const loadPosts = async () => {
         const response = await fetch('/api/post', {
             method: 'GET',
         });
         const data = await response.json();
-        if (data?.posts?.length) {
+        if (response?.status === 200 && data?.posts?.length) {
             setPosts(data?.posts);
+            setLoading(false);
+            setStatus(true);
         }
-        setLoading(false);
     };
     useEffect(() => {
         setLoading(true);
@@ -21,6 +23,6 @@ export default function Home() {
     }, []);
 
     return (
-        <Main posts={posts} category='Trending' loading={loading} />
+        <Main posts={posts} category='Trending' loading={loading} status={status} />
     );
 }

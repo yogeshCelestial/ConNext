@@ -3,9 +3,9 @@ import './Main.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import Loader from './Loader';
+import { Typography } from '@mui/material';
 
-const Main = ({ posts, category, loading }: { posts: SnglPost[], category: string, loading: boolean }) => {
-    console.log(posts, category);
+const Main = ({ posts, category, loading, status }: { posts: SnglPost[], category: string, loading: boolean, status: boolean }) => {
     return (
         <>
             <h1 className='mainHeading'>{category}</h1>
@@ -24,6 +24,9 @@ const Main = ({ posts, category, loading }: { posts: SnglPost[], category: strin
                             <button type='button'>Read More</button>
                         </div>
                     </div>)) : <Loader />}
+                    {posts?.length === 0 && !loading && status && (
+                        <Typography variant='h4'>No Related Post Avaiable.</Typography>
+                    )}
                 </div>
             </div>
         </>
