@@ -66,9 +66,9 @@ const SinglePost = () => {
     }, [singlePost]);
 
     return (
-        <div className='single'>
-            {(!loading) ?
-                (<><div className='content'>
+        (!loading) ?
+            (<div className='single'>
+                <div className='content'>
                     <Image className='postImage' loading='lazy' src={singlePost?.image || ''} alt='post' height={400} width={500} />
                     <div className='userDiv'>
                         <div className='info'>
@@ -97,9 +97,9 @@ const SinglePost = () => {
                         </Paper>
                     </div>
 
-                </div></>) : (<Loader />)}
+                </div>
 
-        </div>
+            </div>) : (<Loader />)
     )
 }
 
