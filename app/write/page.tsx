@@ -47,15 +47,18 @@ const WritePost = () => {
 
     const publishPost = async () => {
         if (files?.[0] && title && content && category) {
+            //upload image to edgestore server
             const res = await edgestore.publicFiles.upload({
                 file: files[0],
+                options: {
+                    temporary: true,
+                },
                 onProgressChange: (progress) => {
                     // you can use this to show a progress bar
                     console.log(progress);
                 },
             });
-            // you can run some server action or api here
-            // to add the necessary data to your database
+            //upload post to database
             const data = {
                 title,
                 content,
@@ -66,6 +69,9 @@ const WritePost = () => {
             const jsonData = JSON.stringify(data);
             const resp = await uploadPost(jsonData);
             if (resp === 200) {
+                await edgestore.publicFiles.confirmUpload({
+                    url: res.url,
+                });
                 resetForm();
             }
         }
