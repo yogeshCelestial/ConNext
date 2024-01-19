@@ -17,7 +17,7 @@ const WritePost = () => {
     const { status } = useSession();
     const { edgestore } = useEdgeStore();
     const [open, setOpen] = useState(false);
-    const [severityStatus, setSeverityStatus] = useState('');
+    const [severityStatus, setSeverityStatus] = useState('info');
     const [snackMessage, setSnackMessage] = useState('');
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
@@ -93,6 +93,8 @@ const WritePost = () => {
                 openSnackBar('error', 'Something went wrong!')
             }
             
+        } else {
+            openSnackBar('warning', 'Please fill all fields');
         }
 
     }
@@ -121,15 +123,16 @@ const WritePost = () => {
                         <div className='inside'>
                             <SelectCategory category={category} setCategory={setCategory} />
                             <label className='fileLabel' htmlFor='file'>
-                                Paste an image Url:
+                                Upload an Image:
                             </label>
+                            <br />
                             <br />
                             <input onChange={(e) => setFiles(e.target.files)}
                                 className='fileInput' type='file' accept='image/png, image/jpeg, image/jpg' id='file' />
                         </div>
                     </Paper>
                 </div>
-                <Snackbar         anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={3000} onClose={handleClose}>
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={3000} onClose={handleClose}>
                     <Alert
                         onClose={handleClose}
                         severity={severityStatus}

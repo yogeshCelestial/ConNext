@@ -1,8 +1,9 @@
 .writeContainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 50px;
+    max-width: 1096px;
 }
 
 .leftPortion {
@@ -16,6 +17,9 @@
 }
 .inside {
     padding: 20px 15px;
+}
+.inputsHolder {
+    width: 700px;
 }
 
 .titleInput {
