@@ -22,12 +22,6 @@ export async function GET(req: NextRequest) {
 
 // POST // http://localhost:3000/api/post
 // body data structure 
-//   {
-//     "title": "Title is here",
-//     "image": "tisisimageurl",
-//     "content": "content is here",
-//     "authorId": "clrbjyttd00086tpthkosdr4e"
-//   }
 
 export async function POST(req: Request) {
     const session = await getServerSession(authOptions);
@@ -41,6 +35,8 @@ export async function POST(req: Request) {
             title: json.title,
             image: json.image,
             content: json.content,
+            published: json.published,
+            category: json.category,
             author: { connect: { email: email } },
         },
     });
