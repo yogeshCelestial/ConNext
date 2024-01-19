@@ -8,9 +8,11 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import { Button } from '@mui/material';
 import { Menu, MenuItem, Avatar } from '@mui/material';
 import { IconButton } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
 const TopNav = () => {
     const { data: session, status } = useSession();
+    const router = useRouter();
     const categories = ['india', 'food', 'travel', 'lifestyle', 'technology'];
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -23,6 +25,11 @@ const TopNav = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const goToWrite = () => {
+        router.push('/write');
+        handleClose();
+    }
 
     return (
         <>
@@ -38,10 +45,10 @@ const TopNav = () => {
                         <div className='navLinks'>
                             {(status === 'authenticated')
                                 ? (
-                                    <IconButton onClick={handleClick}>
+                                    <IconButton className='self' onClick={handleClick}>
                                         <Avatar alt={session.user?.name || ''} src={session.user?.image || ''} />
                                     </IconButton>)
-                                : (<Button variant='text' className='write' onClick={() => signIn('google')} style={{ fontWeight: 700 }}>
+                                : (<Button variant='text' className='write self' onClick={() => signIn('google')} style={{ fontWeight: 700 }}>
                                     Login
                                 </Button>)}
                             <Menu
@@ -53,7 +60,7 @@ const TopNav = () => {
                                     'aria-labelledby': 'basic-button',
                                 }}
                             >
-                                <MenuItem onClick={handleClose}><Link href='/write'>Create Post</Link></MenuItem>
+                                <MenuItem onClick={goToWrite}>Create Post</MenuItem>
                                 <MenuItem onClick={() => { signOut(); setAnchorEl(null); }}>
                                     Logout
                                 </MenuItem>
