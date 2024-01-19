@@ -20,7 +20,7 @@ const Main = ({ posts, category, loading, status }: { posts: SnglPost[], categor
                             <Link href={`/post/${post.id}`}>
                                 <h2>{post.title}</h2>
                             </Link>
-                            <div className="contentData" dangerouslySetInnerHTML={{ __html: post.content }} />
+                            <div className="contentData" dangerouslySetInnerHTML={{ __html: post.content.substring(0, 700) + '...' }} />
                             <button type='button'>Read More</button>
                         </div>
                     </div>)) : <Loader />}
