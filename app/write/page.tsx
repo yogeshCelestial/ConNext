@@ -7,14 +7,17 @@ import SelectCategory from '../../components/SelectCategory';
 import { Button, Paper } from '@mui/material';
 import { useLayoutEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
+import { useEdgeStore } from '../../lib/edgestore';
 
 
 const WritePost = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
+    const [files, setFiles] = useState<File[]>([]);
     const { status } = useSession();
+    const { edgestore } = useEdgeStore();
+
     useLayoutEffect(() => {
         if (status !== 'authenticated' && status !== 'loading') {
             signIn();
@@ -25,7 +28,7 @@ const WritePost = () => {
         setTitle('');
         setContent('');
         setCategory('');
-        setImageUrl('');
+        setFiles([]);
     };
 
     const saveAsDraft = () => console.log('saved as draft');
@@ -41,17 +44,32 @@ const WritePost = () => {
         const data = await response.json();
         return data.status;
     }
+
     const publishPost = async () => {
-        const data = {
-            title,
-            content,
-            image: imageUrl,
-        };
-        const jsonData = JSON.stringify(data);
-        const resp = await uploadPost(jsonData);
-        if (resp === 200) {
-            resetForm();
+        if (files?.[0] && title && content && category) {
+            const res = await edgestore.publicFiles.upload({
+                file: files[0],
+                onProgressChange: (progress) => {
+                    // you can use this to show a progress bar
+                    console.log(progress);
+                },
+            });
+            // you can run some server action or api here
+            // to add the necessary data to your database
+            const data = {
+                title,
+                content,
+                image: res.url,
+                category,
+                published: true,
+            };
+            const jsonData = JSON.stringify(data);
+            const resp = await uploadPost(jsonData);
+            if (resp === 200) {
+                resetForm();
+            }
         }
+        
     }
 
     return (
@@ -81,8 +99,8 @@ const WritePost = () => {
                                 Paste an image Url:
                             </label>
                             <br />
-                            <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} className='fileInput' type='text' id='file' />
-                            {/* <input className='fileInput' type='file' accept='image/png, image/jpeg, image/jpg' id='file' /> */}
+                            <input onChange={(e) => setFiles(e.target.files)}
+                                className='fileInput' type='file' accept='image/png, image/jpeg, image/jpg' id='file' />
                         </div>
                     </Paper>
                 </div>
