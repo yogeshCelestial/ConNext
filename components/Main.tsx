@@ -21,7 +21,9 @@ const Main = ({ posts, category, loading, status }: { posts: SnglPost[], categor
                                 <h2>{post.title}</h2>
                             </Link>
                             <div className="contentData" dangerouslySetInnerHTML={{ __html: post.content.substring(0, 700) + '...' }} />
-                            <button type='button'>Read More</button>
+                            <Link href={`/post/${post.id}`}>
+                                <button type='button'>Read More</button>
+                            </Link>
                         </div>
                     </div>)) : <Loader />}
                     {posts?.length === 0 && !loading && status && (

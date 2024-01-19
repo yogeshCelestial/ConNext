@@ -3,14 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import './singlePost.css';
 import Paper from '@mui/material/Paper';
 import CardComp from '../../../components/Card';
-import Link from 'next/link';
-import { Avatar, Grid } from '@mui/material';
-import { useSession } from 'next-auth/react';
+import { Grid } from '@mui/material';
 import Loader from '@/components/Loader';
 
 export interface SnglPost {
@@ -22,7 +18,6 @@ export interface SnglPost {
 }
 const SinglePost = () => {
     const params = useParams();
-    const { data: session } = useSession();
     const [singlePost, setSinglePost] = useState<SnglPost>();
     const [postedTime, setPostedTime] = useState(0.5);
     const [currentCat, setCurrentCat] = useState('');
@@ -37,17 +32,16 @@ const SinglePost = () => {
         setSinglePost(postData?.post)
         setCurrentCat(postData?.post?.category);
         setLoading(false);
-    }
+    };
 
     // get category specific posts
-
     const getSpecificPosts = async () => {
         const response = await fetch(`/api/post/category/${currentCat}?take=3`, {
             method: 'GET',
         });
         const data = await response.json();
         setSpecificPosts(data?.posts)
-    }
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -77,15 +71,11 @@ const SinglePost = () => {
                 (<><div className='content'>
                     <Image className='postImage' loading='lazy' src={singlePost?.image || ''} alt='post' height={400} width={500} />
                     <div className='userDiv'>
-                        <Avatar alt={session?.user?.name || ''} src={session?.user?.image || ''} />
                         <div className='info'>
-                            <span>{session?.user?.name}</span>
                             {postedTime !== 0.5 && (
                                 <p>Posted {postedTime === 0 ? ' today' : (postedTime === 1) ? postedTime + ' day ago' : postedTime + ' days ago'}</p>
                             )}
                         </div>
-                        <Link href='/write'><EditIcon /></Link>
-                        <DeleteOutlineIcon />
                     </div>
                     <div>
                         <h1>{singlePost?.title}</h1>
@@ -97,8 +87,9 @@ const SinglePost = () => {
                         <Paper elevation={1}>
                             {specificPosts?.length > 1
                                     && specificPosts.map((cardPost: SnglPost) => (
+                                        cardPost?.id !== singlePost?.id &&
                                         <Grid key={cardPost.id}>
-                                            <CardComp image={cardPost?.image} title={cardPost.title} />
+                                            <CardComp id={cardPost.id} image={cardPost?.image} title={cardPost.title} />
                                         </Grid>
                                     )
                                     )

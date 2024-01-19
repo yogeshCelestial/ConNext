@@ -4,7 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { styled } from '@mui/system';
-import { SnglPost } from '@/app/post/[postId]/page';
+import { useRouter } from 'next/navigation';
 
 const Button = styled('button')({
     width: "fit-content",
@@ -23,10 +23,14 @@ const Button = styled('button')({
 });
 
 
-export default function CardComp({ image, title }: { image: string, title: string }) {
+export default function CardComp({ id, image, title }: { id: string, image: string, title: string }) {
+    const router = useRouter();
+    const openPost = (postId: string) => {
+        router.push(`/post/${postId}`)
+    }
     return (
         <div>
-            <CardActionArea>
+            <CardActionArea onClick={() => openPost(id)}>
                 <CardMedia
                     component="img"
                     height="140"
@@ -39,7 +43,7 @@ export default function CardComp({ image, title }: { image: string, title: strin
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <Button sx={{ marginLeft: '20px'}}>Read More</Button>
+            <Button sx={{ marginLeft: '20px', marginBottom: '10px' }}>Read...</Button>
         </div>
     );
 }
