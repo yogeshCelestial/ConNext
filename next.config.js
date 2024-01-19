@@ -4,15 +4,15 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'www.pexels.com',
-            },
-            {
-                protocol: 'https',
                 hostname: 'hitwebcounter.com',
             },
             {
                 protocol: 'https',
                 hostname: 'lh3.googleusercontent.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'files.edgestore.dev',
             },
         ],
     },
