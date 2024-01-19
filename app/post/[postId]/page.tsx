@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useEffect, useState } from 'react';
-// import Image from 'next/image';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -11,13 +11,14 @@ import CardComp from '../../../components/Card';
 import Link from 'next/link';
 import { Avatar, Grid } from '@mui/material';
 import { useSession } from 'next-auth/react';
+import Loader from '@/components/Loader';
 
 export interface SnglPost {
-  id: string,
-  title: string,
-  content: string,
-  image: string,
-  createdAt: string,
+    id: string,
+    title: string,
+    content: string,
+    image: string,
+    createdAt: string,
 }
 const SinglePost = () => {
     const params = useParams();
@@ -26,6 +27,7 @@ const SinglePost = () => {
     const [postedTime, setPostedTime] = useState(0.5);
     const [currentCat, setCurrentCat] = useState('');
     const [specificPosts, setSpecificPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { postId } = params;
     const getSinglePost = async () => {
         const response = await fetch(`/api/post/${postId}`, {
@@ -34,12 +36,13 @@ const SinglePost = () => {
         const postData = await response.json();
         setSinglePost(postData?.post)
         setCurrentCat(postData?.post?.category);
+        setLoading(false);
     }
 
     // get category specific posts
 
-    const getSpecificPosts  = async () => {
-        const response = await fetch(`/api/post/category/${currentCat}`, {
+    const getSpecificPosts = async () => {
+        const response = await fetch(`/api/post/category/${currentCat}?take=3`, {
             method: 'GET',
         });
         const data = await response.json();
@@ -47,6 +50,7 @@ const SinglePost = () => {
     }
 
     useEffect(() => {
+        setLoading(true);
         getSinglePost();
     }, [postId]);
 
@@ -69,37 +73,40 @@ const SinglePost = () => {
 
     return (
         <div className='single'>
-            <div className='content'>
-                {/* <Image className='postImage' loading='lazy' src={singlePost?.image!} alt='post' height={400} width={500} /> */}
-                <div className='userDiv'>
-                    <Avatar alt={session?.user?.name || ''} src={session?.user?.image || ''} />
-                    <div className='info'>
-                        <span>Yogesh</span>
-                        {postedTime !== 0.5 && (
-                            <p>Posted {postedTime === 0 ? ' today' : (postedTime === 1) ? postedTime + ' day ago' : postedTime + ' days ago'}</p>
-                        )}
+            {(!loading) ?
+                (<><div className='content'>
+                    <Image className='postImage' loading='lazy' src={singlePost?.image || ''} alt='post' height={400} width={500} />
+                    <div className='userDiv'>
+                        <Avatar alt={session?.user?.name || ''} src={session?.user?.image || ''} />
+                        <div className='info'>
+                            <span>{session?.user?.name}</span>
+                            {postedTime !== 0.5 && (
+                                <p>Posted {postedTime === 0 ? ' today' : (postedTime === 1) ? postedTime + ' day ago' : postedTime + ' days ago'}</p>
+                            )}
+                        </div>
+                        <Link href='/write'><EditIcon /></Link>
+                        <DeleteOutlineIcon />
                     </div>
-                    <Link href='/write'><EditIcon /></Link>
-                    <DeleteOutlineIcon />
-                </div>
-                <div>
-                    <h1>{singlePost?.title}</h1>
-                    <div className="description" dangerouslySetInnerHTML={{__html: singlePost?.content || ''}}></div>
-                </div>
-            </div>
-            <div className='menu'>
-                <h3>Other posts you may interested in</h3>
-                <div>
-                    <Paper elevation={1} >
-                        {specificPosts?.length > 1
-                        && specificPosts.map((cardPost: SnglPost) => (
-                            <Grid key={cardPost.id}>
-                                <CardComp image={cardPost?.image} title={cardPost.title} />
-                            </Grid>))}
-                    </Paper>
-                </div>
+                    <div>
+                        <h1>{singlePost?.title}</h1>
+                        <div className="description" dangerouslySetInnerHTML={{ __html: singlePost?.content || '' }}></div>
+                    </div>
+                </div><div className='menu'>
+                    <h3>Other posts you may interested in</h3>
+                    <div>
+                        <Paper elevation={1}>
+                            {specificPosts?.length > 1
+                                    && specificPosts.map((cardPost: SnglPost) => (
+                                        <Grid key={cardPost.id}>
+                                            <CardComp image={cardPost?.image} title={cardPost.title} />
+                                        </Grid>
+                                    )
+                                    )
+                            }
+                        </Paper>
+                    </div>
 
-            </div>
+                </div></>) : (<Loader />)}
 
         </div>
     )
