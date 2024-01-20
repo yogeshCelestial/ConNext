@@ -25,7 +25,7 @@ const WritePost = () => {
         }
         setOpen(false);
     };
-    console.log(files, category);
+    // console.log(files, category);
     const openSnackBar = (status: AlertColor, message: string) => {
         setSeverityStatus(status);
         setSnackMessage(message);
