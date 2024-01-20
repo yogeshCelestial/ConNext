@@ -1,13 +1,14 @@
 "use client";
 import React, { useState } from 'react'
 import './write.css';
-import ReactQuill from 'react-quill';
+import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import SelectCategory from '../../components/SelectCategory';
 import { Alert, AlertColor, Button, Paper, Snackbar } from '@mui/material';
 import { useLayoutEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useEdgeStore } from '../../lib/edgestore';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const WritePost = () => {
     const [title, setTitle] = useState('');
@@ -103,7 +104,7 @@ const WritePost = () => {
         <>
             <div className='writeContainer'>
                 <div className='leftPortion'>
-                    <h3>Create/Update Blog Post</h3>
+                    <h3>Create Blog Post</h3>
                     <div className='inputsHolder'>
                         <div>
                             <input value={title} onChange={(e) => setTitle(e.target.value)} className='titleInput' placeholder='Title of the Post' />
