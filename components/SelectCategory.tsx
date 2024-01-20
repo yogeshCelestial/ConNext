@@ -5,10 +5,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-export default function SelectCategory({ category, setCategory }: { category: string, setCategory: (e: any) => void}) {
+interface SelectCategoryProps {
+    category: string;
+    setCategory: (category: string) => void;
+}
+
+export default function SelectCategory({ category, setCategory }: SelectCategoryProps) {
     const categories = ['india', 'food', 'travel', 'lifestyle', 'technology'];
+
     const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCategory((event.target as HTMLInputElement).value);
+        setCategory(event.target.value);
     };
 
     return (

@@ -17,7 +17,7 @@ const WritePost = () => {
     const { status } = useSession();
     const { edgestore } = useEdgeStore();
     const [open, setOpen] = useState(false);
-    const [severityStatus, setSeverityStatus] = useState('info');
+    const [severityStatus, setSeverityStatus] = useState<AlertColor>('info');
     const [snackMessage, setSnackMessage] = useState('');
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
@@ -25,7 +25,7 @@ const WritePost = () => {
         }
         setOpen(false);
     };
-
+    console.log(files, category);
     const openSnackBar = (status: AlertColor, message: string) => {
         setSeverityStatus(status);
         setSnackMessage(message);
@@ -127,15 +127,27 @@ const WritePost = () => {
                             </label>
                             <br />
                             <br />
-                            <input onChange={(e) => setFiles(e.target.files)}
-                                className='fileInput' type='file' accept='image/png, image/jpeg, image/jpg' id='file' />
+                            <input 
+                                type="file"
+                                className='fileInput'
+                                accept='image/png, image/jpeg, image/jpg'
+                                id='file'
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    const files = e.target.files;
+                                    if (files) {
+                                        // Convert FileList to an array
+                                        const filesArray: File[] = Array.from(files);
+                                        setFiles(filesArray);
+                                    }
+                                }}
+                            />
                         </div>
                     </Paper>
                 </div>
                 <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={3000} onClose={handleClose}>
                     <Alert
                         onClose={handleClose}
-                        severity={severityStatus}
+                        severity={severityStatus!}
                         variant="filled"
                         sx={{ width: '100%' }}
                     >
